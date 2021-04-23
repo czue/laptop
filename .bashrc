@@ -127,3 +127,71 @@ source ~/.local/bin/virtualenvwrapper.sh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# git aliases
+alias list-branches='for k in `git branch | perl -pe s/^..//`; do echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k -- | head -n 1`\\t$k; done | sort -r'
+
+# custom functions
+function delete-pyc() {
+    find . -name '*.pyc' -delete
+}
+function pull-latest-master() {
+    git checkout master; git pull origin master
+    git submodule update --init
+    git submodule foreach --recursive 'git checkout master; git pull origin master &'
+    until [ -z "$(ps aux | grep '[g]it pull')" ]; do sleep 1; done
+}
+
+function pull-latest-develop() {
+    git checkout develop; git pull origin develop
+}
+
+function pull-latest-main() {
+    git checkout main; git pull origin main
+}
+
+function pull-code() {
+    pull-latest-master
+    delete-pyc
+}
+
+function pull-code-develop() {
+    pull-latest-develop
+    delete-pyc
+}
+
+function pull-code-main() {
+    pull-latest-main
+    delete-pyc
+}
+
+function delete-merged-branches() {
+    if [ $(branch) = 'master' ]
+        then git branch --merged master | grep -v '\*' | xargs -n1 git branch -d
+        else echo "You are not on branch master"
+    fi
+}
+
+function delete-merged-branches-develop() {
+    if [ $(branch) = 'develop' ]
+        then git branch --merged develop | grep -v '\*' | xargs -n1 git branch -d
+        else echo "You are not on branch develop"
+    fi
+}
+
+function delete-merged-branches-main() {
+    if [ $(branch) = 'main' ]
+        then git branch --merged main | grep -v '\*' | xargs -n1 git branch -d
+        else echo "You are not on branch main"
+    fi
+}
+
+alias timelapse-record="~/bin/timelapse-record.sh"
+alias screen-video="ls -1tr *.jpg > files.txt && mencoder -ovc x264 -mf w=1400:h=900:fps=20:type=jpg 'mf://@files.txt' -o screenlapse.avi"
+
+# path updates
+export PATH=$PATH:/home/czue/bin/
+
+# config
+export EDITOR=emacs
