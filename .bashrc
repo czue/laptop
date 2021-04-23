@@ -187,7 +187,6 @@ function delete-merged-branches-main() {
     fi
 }
 
-alias timelapse-record="~/bin/timelapse-record.sh"
 alias screen-video="ls -1tr *.jpg > files.txt && mencoder -ovc x264 -mf w=1400:h=900:fps=20:type=jpg 'mf://@files.txt' -o screenlapse.avi"
 
 # path updates
