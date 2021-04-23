@@ -1,0 +1,19 @@
+[user]
+	name = Cory Zue
+	email = cory@coryzue.com
+[core]
+	autocrlf = input
+[alias]
+	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Cgreen%s%Creset\\ [%cn]" --decorate
+	lrl = log --pretty=format:"%Cred%d\\ %Cgreen%s" --decorate
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Cgreen%s%Creset\\ [%cn]" --decorate --numstat
+	s = status
+	co = checkout
+	mg = merge
+	com = checkout master
+	plo = pull origin 
+	plm = pull origin master
+	puo = push origin 
+	pum = push origin master
+[pull]
+	ff = only
