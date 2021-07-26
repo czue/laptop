@@ -15,5 +15,6 @@
 	plm = pull origin master
 	puo = push origin 
 	pum = push origin master
+	g = gui
 [pull]
 	ff = only
