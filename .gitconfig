@@ -18,3 +18,5 @@
 	g = gui
 [pull]
 	ff = only
+[push]
+	autoSetupRemote = true
