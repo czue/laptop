@@ -16,8 +16,10 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+HISTTIMEFORMAT='%F %T '
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -183,7 +185,7 @@ function delete-merged-branches-develop() {
 
 function delete-merged-branches-main() {
     if [ $(branch) = 'main' ]
-        then git branch --merged main | grep -v '\*' | xargs -n1 git branch -d
+        then git branch --merged main | grep -v '\*' | grep -v 'pegasus' | xargs -n1 git branch -d
         else echo "You are not on branch main"
     fi
 }
@@ -195,3 +197,17 @@ export PATH=$PATH:/home/czue/bin/
 
 # config
 export EDITOR=emacs
+
+# fly.io
+export FLYCTL_INSTALL="/home/czue/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+# https://askubuntu.com/a/80380/65046
+export PROMPT_COMMAND='history -a'
+
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+export ATUIN_NOBIND="true"
+eval "$(atuin init bash)"
+
+# bind to ctrl-r, add any other bindings you want here too
+bind -x '"\C-r": __atuin_history'
