@@ -3,6 +3,7 @@
 	email = cory@coryzue.com
 [core]
 	autocrlf = input
+	excludesFile = ~/.gitignore_global
 [alias]
 	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Cgreen%s%Creset\\ [%cn]" --decorate
 	lrl = log --pretty=format:"%Cred%d\\ %Cgreen%s" --decorate
@@ -20,3 +21,5 @@
 	ff = only
 [push]
 	autoSetupRemote = true
+[init]
+	defaultBranch = main
