@@ -211,11 +211,6 @@ function delete-merged-branches-main() {
     fi
 }
 
-# Video helpers
-if [ -f ~/.bash_video ]; then
-    . ~/.bash_video
-fi
-
 # path updates
 export PATH=$PATH:/home/czue/bin/
 
@@ -239,17 +234,21 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 
-# Peregrine
-if [ -f ~/.bash_peregrine ]; then
-    . ~/.bash_peregrine
-fi
-
 . "$HOME/.cargo/env"
 
 
 # add pegasus tools to the PATH
 export PATH=$PATH:/home/czue/src/personal/pegasus/tools/bin
 
+# Video helpers
+if [ -f ~/.bash_video ]; then
+    . ~/.bash_video
+fi
+
+# Peregrine
+if [ -f ~/.bash_peregrine ]; then
+    . ~/.bash_peregrine
+fi
 
 # Claude setup
 if [ -f ~/.bash_claude ]; then
