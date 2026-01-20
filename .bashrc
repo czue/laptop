@@ -246,8 +246,6 @@ fi
 
 . "$HOME/.cargo/env"
 
-# add Pulumi to the PATH
-export PATH=$PATH:/home/czue/.pulumi/bin
 
 # add pegasus tools to the PATH
 export PATH=$PATH:/home/czue/src/personal/pegasus/tools/bin
