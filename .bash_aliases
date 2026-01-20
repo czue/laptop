@@ -17,8 +17,8 @@ alias grh='git reset HEAD'
 
 
 # Docker Compose aliases for local database development
-alias dbup='cd /home/czue/src/personal/services && docker compose up -d && cd -'
-alias dbdown='cd /home/czue/src/personal/services && docker compose down && cd -'
+alias dbup='cd "$HOME/src/personal/services" && docker compose up -d && cd -'
+alias dbdown='cd "$HOME/src/personal/services" && docker compose down && cd -'
 
 alias dcd='docker compose down'
 alias dcu='docker compose up'
