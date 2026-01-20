@@ -122,7 +122,7 @@ fi
 # virtualenvwrapper setup
 export VIRTUALENVWRAPPER_PYTHON=$HOME/.virtualenvs/virtualenvwrapper/bin/python
 export WORKON_HOME=$HOME/.virtualenvs
-# export VIRTUALENVWRAPPER_VIRTUALENV=/home/czue/.local/bin/virtualenv
+# export VIRTUALENVWRAPPER_VIRTUALENV=$HOME/.local/bin/virtualenv
 source $HOME/.virtualenvs/virtualenvwrapper/bin/virtualenvwrapper.sh
 
 # nvm setup
@@ -212,13 +212,13 @@ function delete-merged-branches-main() {
 }
 
 # path updates
-export PATH=$PATH:/home/czue/bin/
+export PATH=$PATH:$HOME/bin/
 
 # config
 export EDITOR=emacs
 
 # fly.io
-export FLYCTL_INSTALL="/home/czue/.fly"
+export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 # https://askubuntu.com/a/80380/65046
