@@ -1,4 +1,4 @@
-# git alaises from Adam Johnson
+# git aliases from Adam Johnson
 
 alias g='git'
 alias gg='git gui'
