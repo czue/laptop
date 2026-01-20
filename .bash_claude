@@ -1,0 +1,16 @@
+# Claude setup
+_claude_with_profile() {
+    export CLAUDE_CONFIG_DIR="$1"
+    echo "starting claude with config dir $1"
+    command claude "${@:2}"
+}
+
+# Personal profile (default)
+claude() {
+  _claude_with_profile "$HOME/.claude" "$@"
+}
+
+# Work profile
+pclaude() {
+  _claude_with_profile "$HOME/.claude-peregrine" "$@"
+}

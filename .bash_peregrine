@@ -1,0 +1,4 @@
+# Peregrine
+export AWS_PROFILE=peregrine-us-gov-main-Developer
+export LOCAL_DEV=True
+export GITHUB_TOKEN=YOUR_GITHUB_TOKEN_HERE

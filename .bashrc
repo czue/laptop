@@ -211,35 +211,10 @@ function delete-merged-branches-main() {
     fi
 }
 
-# youtube helpers
-function split_wide_video() {
-    if [ -z "$1" ]; then
-        echo "Usage: split_wide_video <filename>"
-        return 1
-    fi
-
-    # Strip extension if provided
-    local input="$1"
-    local base="${input%.*}"  # removes extension
-
-    # Left/top crop
-    ffmpeg -i "$input" \
-        -filter:v "crop=1920:1080:0:0" \
-        -c:v libx264 -crf 18 -preset fast \
-        -c:a aac -b:a 192k \
-        "${base}-screen.mp4"
-
-    # Right crop
-    ffmpeg -i "$input" \
-        -filter:v "crop=1920:1080:1920:0" \
-        -c:v libx264 -crf 18 -preset fast \
-        -c:a aac -b:a 192k \
-        "${base}-cam.mp4"
-
-    echo "Done! Created: ${base}-screen.mp4 and ${base}-cam.mp4"
-}
-
-alias screen-video="ls -1tr *.jpg > files.txt && mencoder -ovc x264 -mf w=1400:h=900:fps=20:type=jpg 'mf://@files.txt' -o screenlapse.avi"
+# Video helpers
+if [ -f ~/.bash_video ]; then
+    . ~/.bash_video
+fi
 
 # path updates
 export PATH=$PATH:/home/czue/bin/
@@ -265,9 +240,9 @@ eval "$(rbenv init -)"
 
 
 # Peregrine
-export AWS_PROFILE=peregrine-us-gov-main-Developer
-export LOCAL_DEV=True
-export GITHUB_TOKEN=YOUR_GITHUB_TOKEN_HERE
+if [ -f ~/.bash_peregrine ]; then
+    . ~/.bash_peregrine
+fi
 
 . "$HOME/.cargo/env"
 
@@ -279,18 +254,6 @@ export PATH=$PATH:/home/czue/src/personal/pegasus/tools/bin
 
 
 # Claude setup
-_claude_with_profile() {
-    export CLAUDE_CONFIG_DIR="$1"
-    echo "starting claude with config dir $1"
-    command claude "${@:2}"
-}
-
-# Personal profile (default)
-claude() {
-  _claude_with_profile "$HOME/.claude" "$@"
-}
-
-# Work profile
-pclaude() {
-  _claude_with_profile "$HOME/.claude-peregrine" "$@"
-}
+if [ -f ~/.bash_claude ]; then
+    . ~/.bash_claude
+fi

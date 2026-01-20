@@ -1,0 +1,29 @@
+# youtube helpers
+function split_wide_video() {
+    if [ -z "$1" ]; then
+        echo "Usage: split_wide_video <filename>"
+        return 1
+    fi
+
+    # Strip extension if provided
+    local input="$1"
+    local base="${input%.*}"  # removes extension
+
+    # Left/top crop
+    ffmpeg -i "$input" \
+        -filter:v "crop=1920:1080:0:0" \
+        -c:v libx264 -crf 18 -preset fast \
+        -c:a aac -b:a 192k \
+        "${base}-screen.mp4"
+
+    # Right crop
+    ffmpeg -i "$input" \
+        -filter:v "crop=1920:1080:1920:0" \
+        -c:v libx264 -crf 18 -preset fast \
+        -c:a aac -b:a 192k \
+        "${base}-cam.mp4"
+
+    echo "Done! Created: ${base}-screen.mp4 and ${base}-cam.mp4"
+}
+
+alias screen-video="ls -1tr *.jpg > files.txt && mencoder -ovc x264 -mf w=1400:h=900:fps=20:type=jpg 'mf://@files.txt' -o screenlapse.avi"
