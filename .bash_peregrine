@@ -1,7 +1,14 @@
 # Peregrine
 export AWS_PROFILE=peregrine-us-gov-main-Developer
 export LOCAL_DEV=True
+
+# GitHub token - override in .bash_peregrine.local (gitignored)
 export GITHUB_TOKEN=YOUR_GITHUB_TOKEN_HERE
 
 # add Pulumi to the PATH
 export PATH="$PATH:$HOME/.pulumi/bin"
+
+# Load local overrides if they exist
+if [ -f ~/.bash_peregrine.local ]; then
+    source ~/.bash_peregrine.local
+fi

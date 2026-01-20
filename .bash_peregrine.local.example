@@ -1,0 +1,6 @@
+# Example local configuration for Peregrine
+# Copy this file to ~/.bash_peregrine.local and add your actual values
+# The .local file is gitignored and won't be synced to the repo
+
+# Override the GitHub token with your actual token
+export GITHUB_TOKEN=your_actual_github_token_here
