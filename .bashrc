@@ -120,10 +120,10 @@ fi
 
 
 # virtualenvwrapper setup
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export VIRTUALENVWRAPPER_PYTHON=$HOME/.virtualenvs/virtualenvwrapper/bin/python
 export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_VIRTUALENV=/home/czue/.local/bin/virtualenv
-source ~/.local/bin/virtualenvwrapper.sh
+# export VIRTUALENVWRAPPER_VIRTUALENV=/home/czue/.local/bin/virtualenv
+source $HOME/.virtualenvs/virtualenvwrapper/bin/virtualenvwrapper.sh
 
 # nvm setup
 export NVM_DIR="$HOME/.nvm"
@@ -169,6 +169,27 @@ function pull-code-main() {
     delete-pyc
 }
 
+function delete-squashed-merged-branches() {
+    local current_branch
+    current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+    if [ "$current_branch" != "main" ]; then
+        echo "❌ You are not on branch main (current: $current_branch)"
+        return 1
+    fi
+
+    # Loop through all local branches except main
+    for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/ | grep -v '^main$'); do
+        # Check whether the branch's changes already exist in main
+        if git diff --quiet main.."$branch"; then
+            echo "🧹 Deleting merged/squash-merged branch: $branch"
+            git branch -d "$branch"
+        else
+            echo "⚠️  Keeping branch (not merged): $branch"
+        fi
+    done
+}
+
 function delete-merged-branches() {
     if [ $(branch) = 'master' ]
         then git branch --merged master | grep -v '\*' | xargs -n1 git branch -d
@@ -188,6 +209,34 @@ function delete-merged-branches-main() {
         then git branch --merged main | grep -v '\*' | grep -v 'pegasus' | xargs -n1 git branch -d
         else echo "You are not on branch main"
     fi
+}
+
+# youtube helpers
+function split_wide_video() {
+    if [ -z "$1" ]; then
+        echo "Usage: split_wide_video <filename>"
+        return 1
+    fi
+
+    # Strip extension if provided
+    local input="$1"
+    local base="${input%.*}"  # removes extension
+
+    # Left/top crop
+    ffmpeg -i "$input" \
+        -filter:v "crop=1920:1080:0:0" \
+        -c:v libx264 -crf 18 -preset fast \
+        -c:a aac -b:a 192k \
+        "${base}-screen.mp4"
+
+    # Right crop
+    ffmpeg -i "$input" \
+        -filter:v "crop=1920:1080:1920:0" \
+        -c:v libx264 -crf 18 -preset fast \
+        -c:a aac -b:a 192k \
+        "${base}-cam.mp4"
+
+    echo "Done! Created: ${base}-screen.mp4 and ${base}-cam.mp4"
 }
 
 alias screen-video="ls -1tr *.jpg > files.txt && mencoder -ovc x264 -mf w=1400:h=900:fps=20:type=jpg 'mf://@files.txt' -o screenlapse.avi"
@@ -211,3 +260,37 @@ eval "$(atuin init bash)"
 
 # bind to ctrl-r, add any other bindings you want here too
 bind -x '"\C-r": __atuin_history'
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+
+# Peregrine
+export AWS_PROFILE=peregrine-us-gov-main-Developer
+export LOCAL_DEV=True
+export GITHUB_TOKEN=YOUR_GITHUB_TOKEN_HERE
+
+. "$HOME/.cargo/env"
+
+# add Pulumi to the PATH
+export PATH=$PATH:/home/czue/.pulumi/bin
+
+# add pegasus tools to the PATH
+export PATH=$PATH:/home/czue/src/personal/pegasus/tools/bin
+
+
+# Claude setup
+_claude_with_profile() {
+    export CLAUDE_CONFIG_DIR="$1"
+    echo "starting claude with config dir $1"
+    command claude "${@:2}"
+}
+
+# Personal profile (default)
+claude() {
+  _claude_with_profile "$HOME/.claude" "$@"
+}
+
+# Work profile
+pclaude() {
+  _claude_with_profile "$HOME/.claude-peregrine" "$@"
+}
