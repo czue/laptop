@@ -19,6 +19,15 @@ The `.bashrc` sources modular config files for different tools/projects:
 
 **Note:** Replace `YOUR_GITHUB_TOKEN_HERE` in `.bash_peregrine` with your actual GitHub token.
 
+### Project Switching
+
+The `.bashrc` also sources `.bash_devon` for project switching via [dev-on](https://github.com/czue/dev-on), a standalone Rust CLI tool. Install separately:
+
+```bash
+cargo install --path ~/src/personal/dev-on
+# Then source the bash wrapper from the dev-on repo
+```
+
 ### Syncing dotfiles
 
 To copy dotfiles from this repo to your home directory:
