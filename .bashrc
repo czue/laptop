@@ -238,7 +238,7 @@ eval "$(rbenv init -)"
 
 
 # add pegasus tools to the PATH
-export PATH=$PATH:/home/czue/src/personal/pegasus/tools/bin
+export PATH="$PATH:$HOME/src/personal/pegasus/tools/bin"
 
 # Video helpers
 if [ -f ~/.bash_video ]; then
