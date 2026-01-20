@@ -254,3 +254,8 @@ fi
 if [ -f ~/.bash_claude ]; then
     . ~/.bash_claude
 fi
+
+# Project switching (requires dev-on binary)
+if [ -f ~/src/personal/dev-on/shell/devon.bash ]; then
+    . ~/src/personal/dev-on/shell/devon.bash
+fi
