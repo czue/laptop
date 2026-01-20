@@ -4,4 +4,4 @@ export LOCAL_DEV=True
 export GITHUB_TOKEN=YOUR_GITHUB_TOKEN_HERE
 
 # add Pulumi to the PATH
-export PATH=$PATH:/home/czue/.pulumi/bin
+export PATH="$PATH:$HOME/.pulumi/bin"
